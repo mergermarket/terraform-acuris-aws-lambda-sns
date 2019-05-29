@@ -22,7 +22,8 @@ This module will deploy a Lambda function and subscribe it to an SNS topic which
 
 ```hcl
 module "lambda-function" {
-  source                    = "github.com/mergermarket/tf_aws_lambda_sns"
+  source                    = "mergermarket/aws-lambda-sns/acuris"
+  version                   = "0.0.1"
   s3_bucket                 = "s3_bucket_name"
   s3_key                    = "s3_key_for_lambda"
   function_name             = "do_foo"
