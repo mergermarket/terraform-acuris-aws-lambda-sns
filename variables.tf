@@ -24,18 +24,18 @@ variable "topic_name" {
 }
 
 variable "subnet_ids" {
-  type        = "list"
+  type        = list(string)
   description = "The VPC subnets in which the Lambda runs"
 }
 
 variable "security_group_ids" {
-  type        = "list"
+  type        = list(string)
   description = "The VPC security groups assigned to the Lambda"
 }
 
 variable "lambda_env" {
   description = "Environment parameters passed to the Lambda function."
-  type        = "map"
+  type        = map(string)
   default     = {}
 }
 
@@ -49,3 +49,4 @@ variable "timeout" {
   description = "The maximum time in seconds that the Lambda can run for"
   default     = 3
 }
+

@@ -1,9 +1,9 @@
 FROM python:3-alpine
 COPY requirements.txt .
 
-ENV TERRAFORM_VERSION=0.11.11
+ENV TERRAFORM_VERSION=0.12.29
 ENV TERRAFORM_ZIP=terraform_${TERRAFORM_VERSION}_linux_amd64.zip
-ENV TERRAFORM_SUM=94504f4a67bad612b5c8e3a4b7ce6ca2772b3c1559630dfd71e9c519e3d6149c
+ENV TERRAFORM_SUM=872245d9c6302b24dc0d98a1e010aef1e4ef60865a2d1f60102c8ad03e9d5a1d
 
 RUN apk add -U ca-certificates curl && \
     cd /tmp && \
