@@ -19,6 +19,7 @@ resource "aws_lambda_function" "lambda_function" {
 
 resource "aws_sns_topic" "topic" {
   name = var.topic_name
+  policy = var.custom_sns_policy
 }
 
 resource "aws_sns_topic_subscription" "topic_lambda" {

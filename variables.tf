@@ -50,3 +50,7 @@ variable "timeout" {
   default     = 3
 }
 
+variable "custom_sns_policy" {
+  description = "Custom sns policy"
+  default = null
+}
