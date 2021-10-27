@@ -1,6 +1,6 @@
 # AWS Lambda SNS Terraform Module
 
-[![Build Status](https://travis-ci.org/mergermarket/terraform-acuris-aws-lambda-sns.svg?branch=master)](https://travis-ci.org/mergermarket/terraform-acuris-aws-lambda-sns)
+[![Test](https://github.com/mergermarket/terraform-acuris-aws-lambda-sns/actions/workflows/test.yml/badge.svg)](https://github.com/mergermarket/terraform-acuris-aws-lambda-sns/actions/workflows/test.yml)
 
 This module will deploy a Lambda function and subscribe it to an SNS topic which will trigger the function.
 
