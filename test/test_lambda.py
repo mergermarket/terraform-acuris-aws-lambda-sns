@@ -35,6 +35,7 @@ class TestLambda(unittest.TestCase):
       + id                             = (known after apply)
       + invoke_arn                     = (known after apply)
       + last_modified                  = (known after apply)
+      + layers                         = []
       + memory_size                    = 128
       + package_type                   = "Zip"
       + publish                        = false
@@ -82,6 +83,7 @@ class TestLambda(unittest.TestCase):
       + id                             = (known after apply)
       + invoke_arn                     = (known after apply)
       + last_modified                  = (known after apply)
+      + layers                         = []
       + memory_size                    = 128
       + package_type                   = "Zip"
       + publish                        = false
