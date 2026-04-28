@@ -1,16 +1,16 @@
 locals {
-  otel_collector_env = var.enable_otel_collector ? {
+  otel_collector_env = var.enable_otel_collector && !var.disable_logging ? {
     OPENTELEMETRY_EXTENSION_LOG_LEVEL = var.otel_collector_layer_extension_log_level
     AWS_ACCOUNT_ID = data.aws_caller_identity.current[0].account_id
   } : {}
 }
 
 data "aws_caller_identity" "current" {
-  count = var.enable_otel_collector ? 1 : 0
+  count = var.enable_otel_collector && !var.disable_logging ? 1 : 0
 }
 
 data "aws_lambda_layer_version" "otel_collector" {
-  count = var.enable_otel_collector ? 1 : 0
+  count = var.enable_otel_collector && !var.disable_logging ? 1 : 0
 
   layer_name = "otel-collector-layer-${var.architectures[0]}"
 }
@@ -24,7 +24,7 @@ resource "aws_lambda_function" "lambda_function" {
   runtime       = var.runtime
   timeout       = var.timeout
 
-  layers = var.enable_otel_collector ? [data.aws_lambda_layer_version.otel_collector[0].arn] : []
+  layers = var.enable_otel_collector && !var.disable_logging ? [data.aws_lambda_layer_version.otel_collector[0].arn] : []
 
   vpc_config {
     subnet_ids         = var.subnet_ids
@@ -56,14 +56,14 @@ resource "aws_lambda_permission" "with_sns" {
 }
 
 resource "aws_cloudwatch_log_group" "lambda_loggroup" {
-  count = var.enable_otel_collector ? 0 : 1
+  count = var.enable_otel_collector || var.disable_logging ? 0 : 1
   name              = "/aws/lambda/${var.function_name}"
   retention_in_days = 7
   depends_on        = [aws_lambda_function.lambda_function]
 }
 
 resource "aws_cloudwatch_log_subscription_filter" "kinesis_log_stream" {
-  count           = var.datadog_log_subscription_arn != "" && !var.enable_otel_collector ? 1 : 0
+  count           = var.datadog_log_subscription_arn != "" && !var.enable_otel_collector && !var.disable_logging ? 1 : 0
   name            = "kinesis-log-stream-${var.function_name}"
   destination_arn = var.datadog_log_subscription_arn
   log_group_name  = aws_cloudwatch_log_group.lambda_loggroup[0].name

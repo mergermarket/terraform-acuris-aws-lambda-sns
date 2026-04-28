@@ -78,3 +78,9 @@ variable "otel_datadog_log_subscription_arn_ssm_parameter_name" {
   type        = string
   default     = "otel-datadog-log-subscription-role-arn"
 }
+
+variable "disable_logging" {
+  description = "Whether to disable logging for the Lambda function (not recommended)"
+  type        = bool
+  default     = false
+}
