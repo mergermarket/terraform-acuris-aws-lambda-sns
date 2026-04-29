@@ -54,3 +54,33 @@ variable "custom_sns_policy" {
   description = "Custom sns policy"
   default = null
 }
+
+variable "enable_otel_collector" {
+  description = "Whether to enable the OpenTelemetry Collector Lambda Extension"
+  type        = bool
+  default     = false
+}
+
+variable "otel_collector_layer_extension_log_level" {
+  description = "The log level for the OpenTelemetry Collector Lambda Extension"
+  type        = string
+  default     = "error"
+}
+
+variable "architectures" {
+  description = "Instruction set architecture for the Lambda function"
+  type        = list(string)
+  default     = ["x86_64"]
+}
+
+variable "otel_datadog_log_subscription_arn_ssm_parameter_name" {
+  description = "The SSM parameter name for the Datadog log subscription ARN used by the OpenTelemetry Collector"
+  type        = string
+  default     = "otel-datadog-log-subscription-role-arn"
+}
+
+variable "disable_logging" {
+  description = "Whether to disable logging for the Lambda function (not recommended)"
+  type        = bool
+  default     = false
+}
