@@ -52,3 +52,24 @@ resource "aws_iam_role_policy" "otel_collector_policy" {
   name = "otel_collector_policy"
   policy = data.aws_iam_policy_document.otel_collector_policy_document[0].json
 }
+data "aws_iam_policy_document" "deny_cloudwatch_logs" {
+  count = var.enable_otel_collector || var.disable_logging ? 1 : 0
+
+  statement {
+    effect = "Deny"
+
+    actions = [
+      "logs:CreateLogGroup",
+      "logs:CreateLogStream",
+      "logs:PutLogEvents",
+    ]
+    resources = ["arn:aws:logs:*:*:*"]
+  }
+}
+
+resource "aws_iam_role_policy" "deny_cloudwatch_logs" {
+  count  = var.enable_otel_collector || var.disable_logging ? 1 : 0
+  role   = aws_iam_role.iam_for_lambda.id
+  name   = "deny_cloudwatch_logs"
+  policy = data.aws_iam_policy_document.deny_cloudwatch_logs[0].json
+}
